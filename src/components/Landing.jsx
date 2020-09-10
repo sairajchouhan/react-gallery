@@ -2,17 +2,25 @@ import React, { useState } from 'react';
 import '../css/Landing.css';
 import SearchIcon from '@material-ui/icons/Search';
 import unsplash from '../api/unsplash';
+import { useHistory } from 'react-router-dom';
+import { useStateValue } from '../context/StateProvider';
 
 const Landing = () => {
+  const history = useHistory();
   const [input, setInput] = useState('');
+  const [{ results }, dispatch] = useStateValue();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await unsplash.get('/search/collections', {
       params: { query: input },
     });
-    console.log(response.data);
+    dispatch({ type: 'ADD_DATA', payload: response.data.results });
+    setInput('');
+    history.push('/search-results');
   };
+
+  console.log(results);
 
   return (
     <div className="landing">
