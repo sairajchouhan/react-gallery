@@ -1,4 +1,4 @@
-TLive [HERE](https://react-gallery-using-unsplash-api.netlify.app/).
+Go Live [HERE](https://react-gallery-using-unsplash-api.netlify.app/).
 
 ## Available Scripts
 
