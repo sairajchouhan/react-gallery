@@ -1,47 +1,54 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../css/Main.css';
 import { Link } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 import { useStateValue } from '../context/StateProvider';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import unsplash from '../api/unsplash';
+import ImageList from './ImageList';
 
-const Main = () => {
+const Main = ({ match }) => {
   const [{ results }, dispatch] = useStateValue();
+  let random = Math.ceil(Math.random() * 100);
+  async function fetchData() {
+    const res = await unsplash.get('/collections', {
+      params: { page: random, per_page: 5 },
+    });
+    dispatch({ type: 'ADD_DATA', payload: res.data });
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="main">
       <nav className="main__navbar">
         <ul>
-          <li>
-            <Link to="/search-results" className="main__navbarLink">
-              search results
-            </Link>
-          </li>
+          <Link
+            className="main__navbarLink"
+            onClick={() => {
+              fetchData();
+              dispatch({ type: 'EMPTY_IMAGES' });
+            }}
+          >
+            <li>Random collections</li>
+          </Link>
           <li>
             <ArrowForwardIosIcon />
           </li>
-          <li>
-            <Link to={`/${results[0]?.title}`} className="main__navbarLink">
-              {results[0]?.title}
+          {results.map((result) => (
+            <Link
+              to={`/collections/${result?.id}`}
+              className="main__navbarLink"
+            >
+              <li> {result.title} </li>{' '}
             </Link>
-          </li>
-          <li>
-            <Link to={`/${results[1]?.title}`} className="main__navbarLink">
-              {results[1]?.title}
-            </Link>
-          </li>
-          <li>
-            <Link to={`/${results[2]?.title}`} className="main__navbarLink">
-              {results[2]?.title}
-            </Link>
-          </li>
+          ))}
         </ul>
       </nav>
       <div className="main__content">
-        {results.length > 0 ? (
-          <p>Select any collection above</p>
-        ) : (
-          <p>Your result goes here</p>
-        )}
+        <ImageList id={match?.params.id} />
       </div>
     </div>
   );

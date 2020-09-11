@@ -11,20 +11,24 @@ function App() {
     <div className="app">
       <Router>
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Landing />
             <Main />
           </Route>
-          <Route path="/search-results">
+          <Route exact path="/search-results">
             <Landing />
             <Main />
           </Route>
-          {results.map((result) => (
-            <Route path={result.title}>
-              <Landing />
-              <Main />
-            </Route>
-          ))}
+          <Route
+            exact
+            path="/collections/:id"
+            render={(routeProps) => (
+              <>
+                <Landing />
+                <Main {...routeProps} />
+              </>
+            )}
+          />
         </Switch>
       </Router>
     </div>

@@ -1,5 +1,6 @@
 export const initialState = {
   results: [],
+  photos: [],
 };
 
 const reducer = (state, action) => {
@@ -8,6 +9,17 @@ const reducer = (state, action) => {
     case 'ADD_DATA':
       return {
         results: [...action.payload],
+        photos: [...state.photos],
+      };
+    case 'ADD_IMAGES':
+      return {
+        results: [...state.results],
+        photos: [...action.payload],
+      };
+    case 'EMPTY_IMAGES':
+      return {
+        ...state,
+        photos: [],
       };
     default:
       return;
