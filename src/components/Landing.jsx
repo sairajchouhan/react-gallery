@@ -5,7 +5,7 @@ import '../css/Landing.css';
 import { useStateValue } from '../context/StateProvider';
 
 const Landing = () => {
-  const [{ results }, dispatch] = useStateValue();
+  const [{ results }] = useStateValue();
 
   console.log(results);
 

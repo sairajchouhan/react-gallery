@@ -6,15 +6,15 @@ import ImageCard from './ImageCard';
 
 const Images = ({ id }) => {
   const [{ photos }, dispatch] = useStateValue();
-  const fetchImages = async () => {
-    const res = await unsplash.get(`/collections/${id}/photos`);
+  const fetchImages = async (pageNo) => {
+    const res = await unsplash.get(`/collections/${id}/photos`, {
+      params: { page: pageNo },
+    });
     dispatch({ type: 'ADD_IMAGES', payload: res.data });
   };
   useEffect(() => {
     fetchImages();
   }, [id]);
-
-  console.log(photos);
 
   const images = photos.map((image) => {
     return <ImageCard key={image.id} image={image} />;
