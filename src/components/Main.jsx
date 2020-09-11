@@ -21,12 +21,17 @@ const Main = ({ match }) => {
     fetchData();
   }, []);
 
+  let activeClass = 'main__navbarLink main__navLink-active';
+
+  console.log(match);
+
   return (
     <div className="main">
       <nav className="main__navbar">
         <ul>
           <Link
             className="main__navbarLink"
+            to="/search-results"
             onClick={() => {
               fetchData();
               dispatch({ type: 'EMPTY_IMAGES' });
@@ -40,7 +45,12 @@ const Main = ({ match }) => {
           {results.map((result) => (
             <Link
               to={`/collections/${result?.id}`}
-              className="main__navbarLink"
+              className={
+                parseInt(match?.params.id) === result?.id
+                  ? activeClass
+                  : 'main__navbarLink'
+              }
+              onClick={console.log(parseInt(match?.params.id) === result?.id)}
             >
               <li> {result.title} </li>{' '}
             </Link>

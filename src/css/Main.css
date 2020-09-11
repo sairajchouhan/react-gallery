@@ -44,3 +44,7 @@
     margin-top: 90px;
     color: #dd7653;
 }
+
+.main__navLink-active {
+    background-color: #f3f3f3;
+}
