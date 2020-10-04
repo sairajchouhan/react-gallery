@@ -13,10 +13,10 @@ const Landing = () => {
     <div className="landing">
       <div className="landing__container">
         <div className="landing__title">
-          Internship Task by &copy; Bipolar Factory
+          Image Gallery using Unsplash API
         </div>
         <div className="landing__subtitle">
-          Image Gallery using Unsplash API
+          Gets some random collections 
         </div>
       </div>
     </div>
